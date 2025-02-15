@@ -147,23 +147,39 @@ function mostrarPregunta(preguntaData) {
 
     popupBox.innerHTML = `
         <h1>Pregunta ${preguntasRespondidas + 1}/${TOTAL_PREGUNTAS}</h1>
-        <p>${preguntaData.pregunta}</p>
-        <ul>
+        <p class="pregunta-texto">${preguntaData.pregunta}</p>
+        <ul class="opciones-respuesta">
             ${preguntaData.respuestas.map((respuesta, i) =>
-                `<li><strong>${String.fromCharCode(65 + i)}:</strong> ${respuesta}</li>`
+                `<li data-opcion="${String.fromCharCode(65 + i)}">
+                    <strong>${String.fromCharCode(65 + i)}</strong>
+                    ${respuesta}
+                </li>`
             ).join('')}
         </ul>
-        <p>Presiona A, B, C o D para seleccionar tu respuesta</p>
-        <p class="puntos-actuales">Puntos actuales: ${puntos}</p>
-        <p class="progreso-actual">Progreso: ${((preguntasRespondidas/TOTAL_PREGUNTAS) * 100).toFixed(0)}%</p>
+        <p class="instrucciones">Presiona A, B, C o D para seleccionar tu respuesta</p>
+        <div class="info-estado">
+            <p class="puntos-actuales">Puntos actuales: ${puntos}</p>
+            <p class="progreso-actual">Progreso: ${((preguntasRespondidas/TOTAL_PREGUNTAS) * 100).toFixed(0)}%</p>
+        </div>
         <button class="close-btn">Cerrar</button>
     `;
 
     showContainer.classList.add("active");
+
+    // Añadir efecto hover a las opciones
+    const opciones = popupBox.querySelectorAll('.opciones-respuesta li');
+    opciones.forEach(opcion => {
+        opcion.addEventListener('mouseenter', () => {
+            opcion.style.backgroundColor = '#e9e9e9';
+        });
+        opcion.addEventListener('mouseleave', () => {
+            opcion.style.backgroundColor = '#f5f5f5';
+        });
+    });
+
     document.querySelector(".close-btn").onclick = () => cerrarPopup(true);
     document.addEventListener("keydown", handleKeyPress);
 }
-
 // ====== FUNCIONES DE MANEJO DE RESPUESTAS ======
 
 // Manejar teclas presionadas

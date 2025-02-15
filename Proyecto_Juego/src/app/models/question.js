@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const questionSchema = new mongoose.Schema({
-  numero: { type: Number, required: true, unique: true }, // 🔥 Número fijo en la ruleta (1-12)
+  numero: { type: Number, required: true, unique: true }, 
   pregunta: { type: String, required: true },
   respuestas: { type: [String], required: true },
   correcta: { type: Number, required: true }
